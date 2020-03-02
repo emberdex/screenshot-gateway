@@ -1,6 +1,7 @@
 package me.monotron.ssgw.service.impl;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.monotron.ssgw.model.response.ScreenshotUploadResponse;
 import me.monotron.ssgw.service.XBackboneService;
@@ -11,13 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class XBackboneServiceImpl implements XBackboneService {
 
-    @Value("${gateway.downstream-server-url}")
-    String downstreamServerUrl;
+    @Value(value = "${gateway.downstream-server-url}")
+    private String downstreamServerUrl;
 
-    OkHttpClient client;
+    private OkHttpClient client;
 
     @Override
     public ScreenshotUploadResponse uploadScreenshot(String personalUploadToken, MultipartFile file) {
