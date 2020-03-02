@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "gateway.downstream-server-url",
+      "type": "java.lang.String",
+      "description": "The URL of the downstream server to which screenshots will be uploaded."
+    }
+  ]
+}
