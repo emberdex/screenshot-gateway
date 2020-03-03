@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import static java.lang.String.format;
 import static java.util.Objects.isNull;
 
 @RestController
@@ -23,7 +24,7 @@ public class ScreenshotUploadController {
     @PostMapping("/upload")
     public ResponseEntity uploadScreenshot(
         @RequestHeader(value = "X-Downstream-Auth-Token", required = false) String personalUploadToken,
-        @RequestParam(value = "file", required = false) MultipartFile file
+        @RequestBody(required = false) MultipartFile file
     ) {
         if(isNull(personalUploadToken) || personalUploadToken.isEmpty()) {
             return ResponseEntity.badRequest().body(
@@ -37,9 +38,9 @@ public class ScreenshotUploadController {
 
         try {
             return ResponseEntity.ok(screenshotService.uploadScreenshot(personalUploadToken, file));
-        } catch (ScreenshotUploadException exception) {
+        } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ErrorResponse(exception.getMessage()));
+                .body(new ErrorResponse(format("An error occurred: %s", exception.getMessage())));
         }
     }
 }
